@@ -27,5 +27,10 @@ public class StringCalculatorSpec {
         StringCalculator calculator = new StringCalculator();
         assertEquals(28, calculator.add("1,22,5"));
     }
+    @Test
+    public void testAddMultipleNumbersSeparatedByComma() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(10, calculator.add("1,2,3,4"));
+    }
 
 }
