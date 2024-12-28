@@ -83,13 +83,43 @@ public class StringCalculatorSpec {
     public void testAddNegativeNumbersThrowsExceptionWithNextLines2() {
         StringCalculator calculator = new StringCalculator();
 
-        // When negative numbers are passed
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("-11,-3\n6,-4"));
 
-        // Verify the exception message
         assertEquals("Negative numbers not allowed: -11,-3,-4", exception.getMessage());
     }
 
+    @Test
+    public void testAddNegativeNumbersThrowsExceptionWithCustomDelimiter() {
+        StringCalculator calculator = new StringCalculator();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("//;\n-11;-3;6;-4"));
+
+        assertEquals("Negative numbers not allowed: -11,-3,-4", exception.getMessage());
+    }
+
+    @Test
+    public void testAddWithEmptyNumbersAfterDelimiter() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(4, calculator.add("//;\n1;;3"));
+    }
+
+    @Test
+    public void testAddWithLargeNumbers() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(1000000000, calculator.add("500000000,500000000"));
+    }
+
+    @Test
+    public void testAddWithSpacesInNumbers() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.add("1, 2, 3"));
+    }
+
+    @Test
+    public void testAddWithLongCustomDelimiter() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.add("//[***]\n1***2***3"));
+    }
 
 
 }

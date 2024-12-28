@@ -14,16 +14,19 @@ public class StringCalculator {
             numbers = numbers.substring(delimiterIndex + 1);
         }
 
-        String[] splitNumbers = numbers.split(delimiter);
+        String[] splitNumbers = numbers.split(delimiter + "|\n");
         int sum = 0;
         List<Integer> negativeNumbers = new ArrayList<>();
 
         for (String num : splitNumbers) {
-            int value = Integer.parseInt(num);
-            if (value < 0) {
-                negativeNumbers.add(value);
+            num = num.trim();
+            if (!num.isEmpty()) {
+                int value = Integer.parseInt(num);
+                if (value < 0) {
+                    negativeNumbers.add(value);
+                }
+                sum += value;
             }
-            sum += value;
         }
 
         if (!negativeNumbers.isEmpty()) {
