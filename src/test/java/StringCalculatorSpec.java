@@ -22,4 +22,10 @@ public class StringCalculatorSpec {
         assertEquals(6, calculator.add("1,5"));
     }
 
+    @Test
+    public void testAddThreeNumbersSeparatedByComma() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(28, calculator.add("1,22,5"));
+    }
+
 }
