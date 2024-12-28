@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringCalculatorSpec {
 
@@ -56,6 +57,37 @@ public class StringCalculatorSpec {
     public void testAddWithCustomDelimiter2() {
         StringCalculator calculator = new StringCalculator();
         assertEquals(7, calculator.add("//:\n1:2:4"));
+    }
+
+    @Test
+    public void testAddNegativeNumbersThrowsException() {
+        StringCalculator calculator = new StringCalculator();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("1,-2,3,-4"));
+
+        assertEquals("Negative numbers not allowed: -2,-4", exception.getMessage());
+    }
+
+    @Test
+    public void testAddNegativeNumbersThrowsExceptionWithNextLines() {
+        StringCalculator calculator = new StringCalculator();
+
+        // When negative numbers are passed
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("1,-3\n6,-4"));
+
+        // Verify the exception message
+        assertEquals("Negative numbers not allowed: -3,-4", exception.getMessage());
+    }
+
+    @Test
+    public void testAddNegativeNumbersThrowsExceptionWithNextLines2() {
+        StringCalculator calculator = new StringCalculator();
+
+        // When negative numbers are passed
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.add("-11,-3\n6,-4"));
+
+        // Verify the exception message
+        assertEquals("Negative numbers not allowed: -11,-3,-4", exception.getMessage());
     }
 
 
